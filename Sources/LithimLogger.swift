@@ -4,6 +4,11 @@
 
 import HeliumLogger
 import LoggerAPI
+#if os(Linux)
+import Glibc
+#else
+import Foundation
+#endif
 
 public enum LogLevel : Int {
     case Verbose = 1
@@ -65,6 +70,7 @@ extension LithimLogger : Logger {
 
         if(logLevel.rawValue <= currentLevel.rawValue) {
             heliumLogger.log(type, msg: msg, functionName: functionName, lineNum: lineNum, fileName: fileName)
+            fflush(stdout)
         }
     }
 }
